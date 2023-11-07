@@ -1,11 +1,10 @@
 <?php
-    const SERVER = "localhost";
-    const DB = "eventos";
-    const USER = "root";
-    const PASS = "test";
 
-    const SGBD = "mysql:host".SERVER.";dbname=".DB;
+//docker-php-ext-install pdo pdo_mysql
 
-    /*const METHOD = "AES-256-CBC";
-    const SECRET_KEY = '$EVENTOS@P2';
-    const SECRET_IV = "123456";*/
+const SERVER = "db"; // Utiliza el nombre del servicio del contenedor MySQL como host
+const DB = "myDb";
+const USER = "root";
+const PASS = "test";
+
+const SGBD = "mysql:host=" . SERVER . ";port=3306;dbname=" . DB;

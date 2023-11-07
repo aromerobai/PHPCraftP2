@@ -1,11 +1,6 @@
 <?php
-    
-    const SERVER = "localhost";
-    const DB = "eventos";
-    const USER = "root";
-    const PASS = "test";
 
-    const SGBD = "mysql:host".SERVER.";dbname=".DB;
+    include("/var/www/html/PHPCraftP2/config/SERVER.php");
 
     class Modelo {
 
