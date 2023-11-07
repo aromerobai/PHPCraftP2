@@ -6,6 +6,6 @@
 
     const SGBD = "mysql:host".SERVER.";dbname=".DB;
 
-    const METHOD = "AES-256-CBC";
+    /*const METHOD = "AES-256-CBC";
     const SECRET_KEY = '$EVENTOS@P2';
-    const SECRET_IV = "123456";
+    const SECRET_IV = "123456";*/
