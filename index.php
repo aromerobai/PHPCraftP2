@@ -16,8 +16,6 @@ $mensaje = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verifica si el botón con name "boton" ha sido presionado
     if (isset($_POST["boton"])) {
-        // Obtiene el valor del parámetro del campo de entrada con name "parametro"
-        $parametro = $_POST["parametro"];
         // Llama a la función del archivo incluido y almacena el resultado
         $mensaje = Modelo::ejecutar_consulta_simple("SELECT * FROM eventos.Personas");
         if ($mensaje) {
@@ -36,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!-- Formulario con un botón y un campo de entrada para el parámetro -->
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-    <input type="text" name="parametro" placeholder="Introduce un parámetro">
     <input type="submit" name="boton" value="Llamar a la función">
 </form>
 
