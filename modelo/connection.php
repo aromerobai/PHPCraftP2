@@ -2,7 +2,7 @@
 
     include("/var/www/html/PHPCraftP2/config/SERVER.php");
 
-    class Modelo {
+    class connection {
 
         /*--------- Funcion conectar a BD ---------*/
         public static function conectar(){
