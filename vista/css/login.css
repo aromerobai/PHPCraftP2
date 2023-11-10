@@ -1,0 +1,30 @@
+body {
+    background-color: #00060c;
+}
+
+.container {
+    height: 100vh;
+    background-color: #00060c;
+}
+
+.card {
+    margin-top: 50px;
+    max-width: 400px;
+}
+
+.card-body {
+    text-align: center;
+    max-width: 400px;
+}
+
+.alert {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    font-weight: bold;
+}
