@@ -218,6 +218,51 @@
         <button type="submit" name="updateTipoActo">Actualizar Tipo de Acto por ID</button>
         </br>
     </form> 
+    </br>
+    <form style="border: 2px solid black;padding: 11px;" action="./controladorMain.php" method="post">
+         Id_tipo_acto- <input  name="Id_tipo_acto">
+        <button type="submit" name="readTipoActo">Leer Tipo de acto por id</button>
+    </form>
+    </br>
+    <form style="border: 2px solid black;padding: 11px;" action="./controladorMain.php" method="post">
+        Id_tipo_acto- <input  name="Id_tipo_acto">
+        <button type="submit" name="deleteTipoActo">Borrar Tipo de acto por id</button>
+    </form>
+    </br>
+    </br>
+    <h2>Tabla  Usuarios</h2><!-- -------------------------------------------------------------------------- -->
+    </br>
+    <form style="border: 2px solid black;padding: 11px;" action="./controladorMain.php" method="post">
+        Id_usuario- <input  name="Id_usuario">
+        Username- <input  name="Username">
+        Password- <input  name="Password">
+        Id_Persona- <input  name="Id_Persona">
+        Id_tipo_usuario- <input  name="Id_tipo_usuario">
+        <button type="submit" name="createUsuario">Crear Usuario</button>
+        </br>
+    </form> 
+    </br>
+    <form style="border: 2px solid black;padding: 11px;" action="./controladorMain.php" method="post">
+        Id_usuario- <input  name="Id_usuario">
+        Username- <input  name="Username">
+        Password- <input  name="Password">
+        Id_Persona- <input  name="Id_Persona">
+        Id_tipo_usuario- <input  name="Id_tipo_usuario">
+        <button type="submit" name="updateUsuario">Actualizar Usuario por ID</button>
+        </br>
+    </form>
+    </br>
+    <form style="border: 2px solid black;padding: 11px;" action="./controladorMain.php" method="post">
+        Id_usuario- <input  name="Id_usuario">
+        <button type="submit" name="readUsuario">Leer Usuario por id</button>
+    </form>
+    </br>
+    <form style="border: 2px solid black;padding: 11px;" action="./controladorMain.php" method="post">
+    Id_usuario- <input  name="Id_usuario">
+        <button type="submit" name="deleteUsuario">Borrar Usuario por id</button>
+    </form>
+    </br>
+    </br>
 </html>
 
 <?php
@@ -250,6 +295,11 @@ include('../modelo/Tipo_acto/create.php');
 include('../modelo/Tipo_acto/update.php');
 include('../modelo/Tipo_acto/read.php');
 include('../modelo/Tipo_acto/delete.php');
+include('../modelo/Usuarios/create.php');
+include('../modelo/Usuarios/update.php');
+include('../modelo/Usuarios/read.php');
+include('../modelo/Usuarios/delete.php');
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 /*-----------------------------------------------------------------------------------------------*/
@@ -446,21 +496,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $Id_tipo_acto = $_POST["Id_tipo_acto"];
         $Descripcion = $_POST["Descripcion"];
         updateTipoActo($Id_tipo_acto, $Descripcion);
-    }elseif(isset($_POST["readTipoUsuario"])){
-        $Id_tipo_usuario = $_POST["Id_tipo_usuario"];
-        $mensaje = readTipoUsuario($Id_tipo_usuario);
+    }elseif(isset($_POST["readTipoActo"])){
+        $Id_tipo_acto = $_POST["Id_tipo_acto"];
+        $mensaje = readTipoActo($Id_tipo_acto);
         if ($mensaje) {
             while ($fila = $mensaje->fetch(PDO::FETCH_ASSOC)) {
                 echo "</br>";
-                echo "Id_tipo_usuario: " . $fila['Id_tipo_usuario'] . " ";
+                echo "Id_tipo_acto: " . $fila['Id_tipo_acto'] . " ";
                 echo "Descripcion: " . $fila['Descripcion'] . " ";
             }
         } else {
             echo "Error en la consulta";
         }
-    }elseif(isset($_POST["deleteTipoUsuario"])){
-        $Id_tipo_usuario = $_POST["Id_tipo_usuario"];
-        deleteTipoUsuarios($Id_tipo_usuario);
+    }elseif(isset($_POST["deleteTipoActo"])){
+        $Id_tipo_acto = $_POST["Id_tipo_acto"];
+        deleteTipoActo($Id_tipo_acto);
+/*-----------------------------------------------------------------------------------------------*/
+    }elseif (isset($_POST["createUsuario"])) {
+        $Id_usuario  = $_POST["Id_usuario"];
+        $Username = $_POST["Username"];
+        $Password = $_POST["Password"];
+        $Id_Persona  = $_POST["Id_Persona"];
+        $Id_tipo_usuario  = $_POST["Id_tipo_usuario"];
+        createUsuario($Id_usuario, $Username,$Password,$Id_Persona,$Id_tipo_usuario);
+    } elseif (isset($_POST["updateUsuario"])) {
+        $Id_usuario  = $_POST["Id_usuario"];
+        $Username = $_POST["Username"];
+        $Password = $_POST["Password"];
+        $Id_Persona  = $_POST["Id_Persona"];
+        $Id_tipo_usuario  = $_POST["Id_tipo_usuario"];
+        updateUsuario($Id_usuario, $Username,$Password,$Id_Persona,$Id_tipo_usuario);
+    }elseif(isset($_POST["readUsuario"])){
+        $Id_usuario = $_POST["Id_usuario"];
+        $mensaje = readUsuario($Id_usuario);
+        if ($mensaje) {
+            while ($fila = $mensaje->fetch(PDO::FETCH_ASSOC)) {
+                echo "</br>";
+                echo "Username: " . $fila['Username'] . " ";
+                echo "Password: " . $fila['Password'] . " ";
+                echo "Id_Persona: " . $fila['Id_Persona'] . " ";
+                echo "Id_tipo_usuario: " . $fila['Id_tipo_usuario'] . " ";
+            }
+        } else {
+            echo "Error en la consulta";
+        }
+    }elseif(isset($_POST["deleteUsuario"])){
+        $Id_usuario = $_POST["Id_usuario"];
+        deleteUsuario($Id_usuario);
 /*-----------------------------------------------------------------------------------------------*/
     }
 }
