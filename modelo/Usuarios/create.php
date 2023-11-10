@@ -1,10 +1,15 @@
 <?php
 
-function createUsuario($Id_usuario, $Username,$Password,$Id_Persona,$Id_tipo_usuario) {
+function createUsuario($Username,$Password,$Id_Persona,$Id_tipo_usuario) {
     
-    $consulta = "INSERT INTO eventos.Usuarios (Id_usuario, Username,Password,Id_Persona,Id_tipo_usuario) 
-    VALUES ('$Id_usuario', '$Username', '$Password', '$Id_Persona', '$Id_tipo_usuario')";
+   try{ 
+        $consulta = "INSERT INTO eventos.Usuarios (Username,Password,Id_Persona,Id_tipo_usuario) 
+        VALUES ('$Username', '$Password', '$Id_Persona', '$Id_tipo_usuario')";
 
-    connection::ejecutar_consulta($consulta);
-    
+        $resultado = connection::ejecutar_consulta($consulta);
+    }catch (PDOException $e) {
+        // Captura la excepción de la base de datos
+        // Puedes manejarla o lanzarla nuevamente si es necesario
+        return 'Error en el registro!';
+    }
 }

@@ -7,7 +7,7 @@ html, body {
 /*Estilo para la columna del titulo de la aplicación */
 .columa-aplicacion {
     min-height: 100vh; 
-    background-color: rgb(212, 212, 194);
+    background-color: rgb(243, 243, 230);
 }
 
 /*Estilo para el titulo de la aplicación */

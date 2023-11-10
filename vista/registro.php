@@ -6,43 +6,60 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registro de Usuario</title>
-        <link rel="stylesheet" href="vista/css/styles.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../vista/css/registro.css">
     </head>
 
     <body>
-        <h1>Registro</h1>
 
-        <?php 
-            
-            //Verifica si el formulario se ha enviado correctamente
-            if ($_SERVER["REQUEST_METHOD"] == "POST"){
-                // Logica para processar el formulario y registrar en la BBDD
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="text-register">Registro</h1>
 
-                $mensaje = "El registro ha sido un éxito";
-            } else {
-                $mensaje = "";
-            }
-        ?>
+                            <!-- Formulario de registro -->
+                            <form class="border p-3" action="./registro.php" method="post">
+                                <div class="form-group">
+                                    <label for="Username">Nombre de usuario</label>
+                                    <input type="text" name="Username" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Password">Contraseña</label>
+                                    <input type="password" name="Password" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Id_Persona">Id_Persona</label>
+                                    <input type="text" name="Id_Persona" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Id_tipo_usuario">Id_tipo_usuario</label>
+                                    <input type="text" name="Id_tipo_usuario" class="form-control" required>
+                                </div>
+                                <button type="submit" name="createUsuario" class="btn btn-primary btn-block">Crear Usuario</button>
 
-        <?php
-            if (!empty($mensaje)) {
-                echo "<p>$mensaje</p>";
-            }
-        ?>
-
-        <!-- Formulario de registro -->
-        <form action="index.php?action=procesarRegistro" method="post">
-            <!-- Campo de usuario -->
-            <label for="usuario">Nombre de Usuario:</label>
-            <input type="text" id="usuario" name="usuario" required><br><br>
-
-            <!-- Campo de contraseña -->
-            <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contraseña" name="contraseña" required><br><br>
-
-            <!-- Botón de envío del formulario -->
-            <button type="submit">Registrar</button>
-        </form>
-
+                                <!-- Espacio para mostrar el mensaje -->
+                                <?php 
+                                include ("../controlador/registroControlador.php");
+                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+                                    $mensaje = registro();
+                                    
+                                    if ($mensaje == 'Error en el registro!'){
+                                        echo "<p style='color:red; margin-top:15px'>{$mensaje}</p>";
+                                    } else {
+                                    // Redirección a la página de inicio
+                                    echo '<meta http-equiv="refresh" content="0;url=../index.php">';
+                                    exit();
+                                    }
+                                }
+                                ?>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

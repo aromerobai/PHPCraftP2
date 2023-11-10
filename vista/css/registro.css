@@ -7,13 +7,16 @@ body {
     justify-content: center;
     align-items: center;
 }
+.card {
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+}
 
-.text-login {
+.text-register {
     margin-bottom: 40px;
     justify-content: center;
     align-items: center;
 }
-
 .btn-primary {
     max-width: 130px;
     margin-top: 40px;
