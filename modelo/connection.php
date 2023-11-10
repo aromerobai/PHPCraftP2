@@ -12,7 +12,7 @@
         }
 
         /*--------- Funcion ejecutar consultas simples ---------*/
-        public static function ejecutar_consulta_simple($consulta){
+        public static function ejecutar_consulta($consulta){
             $sql = self::conectar()->prepare($consulta);
             $sql->execute();
             return $sql;
