@@ -1,0 +1,22 @@
+
+body {
+    margin: 100px !important;
+}
+.button {
+    width: 200px; /* Ancho del botón */
+    height: 150px; /* Altura del botón */
+    background-image: url('tu_imagen.jpg'); /* Reemplaza 'tu_imagen.jpg' con la ruta de tu imagen */
+    background-size: cover; /* Ajustar la imagen al tamaño del botón */
+    background-position: center; /* Centrar la imagen en el botón */
+    color: white; /* Color del texto */
+    text-align: center; /* Alinear texto al centro */
+    display: flex; /* Mostrar como flex para centrar contenido */
+    align-items: center; /* Centrar verticalmente */
+    justify-content: center; /* Centrar horizontalmente */
+    border: 200px; /* Eliminar borde del botón */
+    border-radius: 10px; /* Agregar bordes redondeados */
+}
+
+h1 {
+    margin-top: 150px;
+}

@@ -1,9 +1,14 @@
 <?php
 
-function createPersonas($id, $nombre, $apellido1, $apellido2) {
-    
-    $consulta = "INSERT INTO eventos.Personas (id_persona, nombre, apellido1, apellido2) VALUES ('$id', '$nombre', '$apellido1', '$apellido2')";
+function createPersonas($nombre, $apellido1, $apellido2) {
 
-    connection::ejecutar_consulta($consulta);
+    try{
+        $consulta = "INSERT INTO eventos.Personas (nombre, apellido1, apellido2) 
+        VALUES ('$nombre', '$apellido1', '$apellido2')";
     
+        $resultado = connection::ejecutar_consulta($consulta);
+        
+    }catch (PDOException $e) {
+        return 'Error en el registro!';
+    }
 }

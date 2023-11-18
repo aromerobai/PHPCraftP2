@@ -19,7 +19,8 @@ body {
 }
 .btn-primary {
     max-width: 130px;
-    margin-top: 40px;
+    margin-top: 35px;
+    margin-bottom: 25px;
     display: block;
     background-color: #f1904e !important; 
     color: #ffffff;     

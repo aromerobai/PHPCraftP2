@@ -12,7 +12,7 @@ if (isset($_GET['mensaje'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>inicio</title>
+    <title>Inscribify | Inicio</title>
     
     <!-- Incluir Bootstrap desde tu carpeta local -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -21,7 +21,7 @@ if (isset($_GET['mensaje'])) {
 </head>
 
 <body>
-<a href="vista/menuAdministracion.php">Ir a Administración</a>
+<a href="vista/admin/menuAdministracion.php">Ir a Administración</a>
     <div class="container-inicio">
         <div class="row">
             <!-- Primera Columna - Nombre de la Aplicación -->
@@ -57,7 +57,5 @@ if (isset($_GET['mensaje'])) {
     </div>
     
 </body> 
-
-
 </html>
 

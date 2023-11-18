@@ -7,15 +7,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title> 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="../vista/css/login.css">
     </head>
 
-    <body> 
-    <!-- Botón provisional para el salvoconducto -->
-    
-        <div class="container"> <!-- Clase 'container' de Bootstrap para centrar y 'h-100' para ocupar toda la altura -->
-            <div class="row"> <!-- Clase 'row' y otras clases para centrar vertical y horizontalmente -->
+    <body>     
+        <div class="container"> 
+            <div class="row"> 
                 <div class="col-4"> <!-- Tamaño de columna -->
                     <div class="card"> 
                         <div class="card-body">
