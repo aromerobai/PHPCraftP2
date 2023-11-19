@@ -1,10 +1,14 @@
 <?php
 
-function createActo($Id_acto,$Fecha,$Hora,$Titulo,$Descripcion_corta,$Descripcion_larga,$Num_asistentes,$Id_tipo_acto) {
+function createActo($Fecha,$Hora,$Titulo,$Descripcion_corta,$Descripcion_larga,$Num_asistentes,$Id_tipo_acto) {
     
-    $consulta = "INSERT INTO eventos.Actos (Id_acto, Fecha, Hora, Titulo, Descripcion_corta, Descripcion_larga, Num_asistentes, Id_tipo_acto) 
-    VALUES ('$Id_acto', STR_TO_DATE('$Fecha', '%d-%m-%Y'), '$Hora', '$Titulo', '$Descripcion_corta', '$Descripcion_larga', '$Num_asistentes', '$Id_tipo_acto')";    
+    try {
+        $consulta = "INSERT INTO eventos.Actos (Fecha, Hora, Titulo, Descripcion_corta, Descripcion_larga, Num_asistentes, Id_tipo_acto) 
+        VALUES ('$Fecha', '$Hora', '$Titulo', '$Descripcion_corta', '$Descripcion_larga', '$Num_asistentes', '$Id_tipo_acto')"; 
 
-    connection::ejecutar_consulta($consulta);
-    
+        $resultado = connection::ejecutar_consulta($consulta);
+    }catch (PDOException $e) {
+        
+        return 'Error al crear el evento!';
+    }
 }

@@ -30,7 +30,9 @@ function registro() {
                     $registroExitoso = createUsuario($Username, $Password, $id_persona, $Id_tipo_usuario, $Email); 
                 } 
             }
-        } 
+        } else{
+            return 'Error en el registro!'
+        }
     } 
 }
 

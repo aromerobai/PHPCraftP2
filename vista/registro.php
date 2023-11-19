@@ -11,7 +11,6 @@
     </head>
 
     <body>
-
         <div class="container">
             <div class="row">
                 <div class="col-6">
@@ -43,8 +42,11 @@
                                     <input type="password" name="Password" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="Id_tipo_usuario">Id tipo usuario (1-Usuario o 2-Ponente)</label>
-                                    <input type="text" name="Id_tipo_usuario" class="form-control" required>
+                                    <label for="Id_tipo_usuario">Tipo de usuario</label>
+                                    <select name="Id_tipo_usuario" class="form-control" required>
+                                        <option value="1">Usuario</option>
+                                        <option value="2">Ponente</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="Email">Correo electrónico</label>

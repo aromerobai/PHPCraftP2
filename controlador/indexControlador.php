@@ -1,4 +1,5 @@
 <?php
+// indexControlador.php
 
 function mostrarFormularioRegistro(){
     // Imprimir la meta redirección

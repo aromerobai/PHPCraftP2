@@ -1,22 +1,75 @@
 
 body {
-    margin: 100px !important;
-}
-.button {
-    width: 200px; /* Ancho del botón */
-    height: 150px; /* Altura del botón */
-    background-image: url('tu_imagen.jpg'); /* Reemplaza 'tu_imagen.jpg' con la ruta de tu imagen */
-    background-size: cover; /* Ajustar la imagen al tamaño del botón */
-    background-position: center; /* Centrar la imagen en el botón */
-    color: white; /* Color del texto */
-    text-align: center; /* Alinear texto al centro */
-    display: flex; /* Mostrar como flex para centrar contenido */
-    align-items: center; /* Centrar verticalmente */
-    justify-content: center; /* Centrar horizontalmente */
-    border: 200px; /* Eliminar borde del botón */
-    border-radius: 10px; /* Agregar bordes redondeados */
+    background-color: rgb(243, 243, 230);
+    margin: 0; /* Asegura que no haya margen externo en el body */
+    padding: 0; /* Asegura que no haya padding externo en el body */
 }
 
-h1 {
+.principal {
+    display:flexbox;
+    min-height: 65vh;
     margin-top: 150px;
+    margin-bottom: 150px;
+    padding-top: 50px;
+    padding-bottom: 50x;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    border-radius: 5px;
+    background-color: white;
 }
+
+.buttons-container {
+    display: flex;
+    justify-content: space-around; 
+    align-items: center; 
+    margin-top: 20px; 
+    padding: 50px;
+}
+.button-crear-evento {
+    width: 450px;
+    height: 350px; 
+    background-image: url('../../assets/images/crear.jpg'); 
+    background-size: 80%;
+    background-position:  center 30px; 
+    opacity: 0.4;
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    text-align: center; 
+    display: flex; 
+    align-items: start; 
+    justify-content: center; 
+    border-radius: 5px; 
+    border-color: black;
+}
+
+.button-crear-evento:hover {
+    opacity: 1;
+    color: rgb(0, 0, 0);
+    border-color: rgb(0, 0, 0);
+}
+
+.button-configurar-evento {
+    width: 450px;
+    height: 350px; 
+    margin-left: 10px;
+    background-image: url('../../assets/images/configurar.jpg'); 
+    background-size: 80%;
+    background-position:  center 30px; 
+    opacity: 0.4;
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    text-align: center; 
+    display: flex; 
+    align-items: start; 
+    justify-content: center; 
+    border-radius: 5px; 
+    border-color: black;
+}
+
+.button-configurar-evento:hover {
+    opacity: 1;
+    color: rgb(0, 0, 0);
+    border-color: rgb(0, 0, 0);
+}
+
