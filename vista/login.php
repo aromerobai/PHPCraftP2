@@ -27,7 +27,8 @@
                             ?>
 
                             <!-- Formulario de inicio de sesión -->
-                            <form action="index.php?action=procesarLogin" method="post">
+                            <!--<form action="index.php?action=procesarLogin" method="post">-->
+                            <form action="../controlador/loginControlador.php" method="post">
                                 <!-- Campo de usuario -->
                                 <div class="form-group">
                                     <label for="usuario">Usuario:</label>
@@ -41,7 +42,7 @@
                                 </div>
 
                                 <!-- Botón de envío del formulario -->
-                                <button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
+                                <button type="submit" name="loginUsuario" class="btn btn-primary btn-block">Iniciar sesión</button>
                             </form>
                         </div>
                     </div>

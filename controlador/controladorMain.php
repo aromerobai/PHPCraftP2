@@ -317,7 +317,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         updatePersonas($id, $nombre, $apellido1, $apellido2);
     }elseif(isset($_POST["readPersona"])){
         $nombre = $_POST["nombre"];
-        $mensaje = readPersona($nombre);
+        $mensaje = readPersonaNombre($nombre);
         if ($mensaje) {
             while ($fila = $mensaje->fetch(PDO::FETCH_ASSOC)) {
                 echo "</br>";
