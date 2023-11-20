@@ -21,7 +21,6 @@ if (isset($_GET['mensaje'])) {
 </head>
 
 <body>
-<a href="vista/admin/menuAdministracion.php">Ir a Administración</a>
     <div class="container-inicio">
         <div class="row">
             <!-- Primera Columna - Nombre de la Aplicación -->

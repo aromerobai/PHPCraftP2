@@ -46,6 +46,7 @@
                                     <select name="Id_tipo_usuario" class="form-control" required>
                                         <option value="1">Usuario</option>
                                         <option value="2">Ponente</option>
+                                        <option value="3">Administrador</option>
                                     </select>
                                 </div>
                                 <div class="form-group">

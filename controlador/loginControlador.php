@@ -17,14 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $id_tipo_usuario = $fila['Id_tipo_usuario'];
 
                 if ($id_tipo_usuario == 1) {
-                    echo "<script>window.location.href='../vista/usuario/usuarioVista.php?var1=" . urlencode($id_tipo_usuario) . "';</script>";
+                    echo "<script>window.location.href='../vista/usuario/usuarioVista.php?var1=" . urlencode($id_usuario) . "';</script>";
                     exit(); 
                 } elseif ($id_tipo_usuario == 2) {
-                    echo "<script>window.location.href='../vista/ponente/ponenteVista.php?var1=" . urlencode($id_tipo_usuario) . "';</script>";
+                    echo "<script>window.location.href='../vista/ponente/ponenteVista.php?var1=" . urlencode($id_usuario) . "';</script>";
                     exit(); 
                 } elseif ($id_tipo_usuario == 3) {
                     echo "Es de tipo administrador";
-                    // Aquí hay que decidir que se hace con el Administrador
+                    echo "<script>window.location.href='../vista/admin/menuAdministracion.php';</script>";
+                    exit();
                 }
             }
 
