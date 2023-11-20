@@ -31,7 +31,7 @@ function registro() {
                 } 
             }
         } else{
-            return 'Error en el registro!'
+            return 'Error en el registro!';
         }
     } 
 }
