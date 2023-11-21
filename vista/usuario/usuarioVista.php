@@ -44,8 +44,15 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                 <input type="hidden" name="password" value="<?php echo $password; ?>">
                 <input type="hidden" name="email" value="<?php echo $email; ?>">
                 <button type="submit">Inscribirse en Actos</button>
+            </form></br>
+            <form action="./desincribirseVista.php" method="get">
+                <input type="hidden" name="id" value="<?php echo $id; ?>">
+                <input type="hidden" name="username" value="<?php echo $username; ?>">
+                <input type="hidden" name="password" value="<?php echo $password; ?>">
+                <input type="hidden" name="email" value="<?php echo $email; ?>">
+                <button type="submit">Desinscribirse en Actos</button>
             </form>
-            <div class="text-center mt-4">
+            <div class="text-center mt-3">
             <button class="btn btn-primary mr-2" onclick="window.location.href='usuarioVista.php?view=mes&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Mes</button>
             <button class="btn btn-primary mr-2" onclick="window.location.href='usuarioVista.php?view=semana&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Semana</button>
             <button class="btn btn-primary" onclick="window.location.href='usuarioVista.php?view=dia&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Día</button>   
@@ -60,8 +67,58 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
 
         //Muestro el mes la semana y eldia segun el boton
         if(isset($_GET['view'])) {
+
+            // Obtener los eventos
+            require_once '../../controlador/inscribirUsuarioControlador.php';
+                
+            $actosPersonas = leerActosDePersona($id);
+            $diasActosInscritos = array();
+            $horasActosInscritos = array();
+
+            if ($actosPersonas && is_iterable($actosPersonas)) {
+                foreach ($actosPersonas as $actoPersona) {
+                    $actoPersonaId = $actoPersona['id_acto'];
+                    $resultados = obtenerActos();
+                    foreach ($resultados as $acto) { 
+                        $actoGeneral = $acto['Id_acto'];
+                        if ($acto['Id_acto'] === $actoPersonaId) {
+                            $Fecha = $acto['Fecha'];
+                            $Hora = $acto['Hora'];
+                            $eventMonth = date('n', strtotime($Fecha));
+                            $eventYear = date('Y', strtotime($Fecha));
+                            $currentMonth = date('n');
+                            $currentYear = date('Y');
+                            if ($eventMonth === $currentMonth && $eventYear === $currentYear) {
+                                $diasActosInscritos[] = date('j', strtotime($Fecha));
+                                $horasActosInscritos[] = date('H:i', strtotime($Hora));
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Crear un array para almacenar las fechas de los eventos
+            $actosTotales = obtenerActos();
+            $diasActos = array();
+            $horasActos = array();
+
+            if ($actosTotales && is_iterable($actosTotales)) {
+                foreach ($actosTotales as $acto) {
+                    $Fecha = $acto['Fecha'];
+                    $Hora = $acto['Hora'];
+                    $currentMonth = date('n');
+                    $currentYear = date('Y');
+                    $eventMonth = date('n', strtotime($Fecha));
+                    $eventYear = date('Y', strtotime($Fecha));
+                    if ($eventMonth === $currentMonth && $eventYear === $currentYear) {
+                        $diasActos[] = date('j', strtotime($Fecha));
+                        $horasActos[] = date('H:i', strtotime($Hora)); 
+                    }
+                }
+            }
+
             $view = $_GET['view'];
-        
+/**************************************************************************************************************************************** */
             if ($view === 'mes') {
          
                 echo "<div class='calendar mt-5'>";
@@ -77,39 +134,6 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
 
                 // Obtener el día de la semana del primer día del mes
                 $dayOfWeekIndex = date('w', $firstDayOfMonth);
-
-                // Obtener los eventos
-                require_once '../../controlador/inscribirUsuarioControlador.php';
-                
-                $actosPersonas = leerActosDePersona($id);
-                $eventDays = array();
-
-                if ($actosPersonas && is_iterable($actosPersonas)) {
-                    foreach ($actosPersonas as $actoPersona) {
-                        $actoPersonaId = $actoPersona['id_acto'];
-                        //echo "idActo Verde: " . $actoPersonaId. "</br>";
-                        $resultados = obtenerActos();
-                        foreach ($resultados as $acto) {
-                            $actoGeneral = $acto['Id_acto'];
-                            //echo "Acto general: " . $acto['Id_acto']." -- Acto Persona: " . $actoPersonaId ."</br>";
-                            if ($acto['Id_acto'] === $actoPersonaId) {
-                                $Fecha = $acto['Fecha'];
-                                $eventDays[] = date('j', strtotime($Fecha));
-                            }
-                        }
-                    }
-                }
-                
-                // Crear un array para almacenar las fechas de los eventos
-                $diasActos = obtenerActos();
-                $eventDates = array();
-                if ($diasActos && is_iterable($diasActos)) {
-                    foreach ($diasActos as $acto) {
-                        $Fecha = $acto['Fecha'];
-                        $id = $acto['Id_acto'];
-                        $eventDates[] = date('j', strtotime($Fecha)); // Almacena solo el día del evento
-                    }
-                }
 
                 // Nombres de los meses y días de la semana
                 $monthNames = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
@@ -134,8 +158,8 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                 // Mostrar los días del mes
                 for ($day = 1; $day <= $numberDays; $day++, $dayOfWeekIndex++) {
                     // Verificar si el día actual coincide con un evento y resaltar en verde si es así
-                    $isEventDay = in_array($day, $eventDates);
-                    $isGreenEventDay = in_array($day, $eventDays);
+                    $isEventDay = in_array($day, $diasActos);
+                    $isGreenEventDay = in_array($day, $diasActosInscritos);
                     $cellClass = $isEventDay ? ($isGreenEventDay ? 'event-day-green' : 'event-day') : '';
 
                     if ($dayOfWeekIndex % 7 == 0) {
@@ -154,30 +178,75 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
 
                 echo "</tr></table>";
                 echo "</div>";
-
+/**************************************************************************************************************************************** */
             } elseif ($view === 'semana') {
 
-                echo "<div class='week row no-gutters'>";
-                    $currentDate = date('Y-m-d'); // Obtener la fecha actual
-                    
-                    for ($i = 0; $i <= 6; $i++) {
-                        $day = date('Y-m-d', strtotime("+$i days", strtotime($currentDate))); // Utilizar $currentDate para obtener los días de la semana
-                        echo "<div class='col-lg-auto day mt-3'>"; // Agregar la clase mt-3 para el margen superior
-                        echo "<h4 class='mb-3 p-2'>$day</h4>";
-                        
-                        echo "<table class='table table-bordered'>";
-                        echo "<tbody>";
-                        for ($hour = 9; $hour <= 21; $hour++) {
-                            echo "<tr>";
-                            echo "<td>$hour:00</td>";
-                            echo "</tr>";
-                        }
-                        echo "</tbody>";
-                        echo "</table>";
-                        echo "</div>";
+                foreach($horasActosInscritos as $index => $hora) {
+                    if(isset($diasActosInscritos[$index])) {
+                        $combinacionInscritos[] = array('hora' => $hora, 'dia' => $diasActosInscritos[$index]);
                     }
-                echo "</div>";
+                }
+                
+                // Combinar horasActos con diasActos
+                foreach($horasActos as $index => $hora) {
+                    if(isset($diasActos[$index])) {
+                        $combinacionActos[] = array('hora' => $hora, 'dia' => $diasActos[$index]);
+                    }
+                }
 
+                echo "<div class='week row no-gutters'>";
+                $currentDate = date('Y-m-d'); // Obtener la fecha actual
+                
+                for ($i = 0; $i <= 6; $i++) {
+                    $day = date('Y-m-d', strtotime("+$i days", strtotime($currentDate))); // Obtener la fecha del día actual
+                
+                    echo "<div class='col-lg-auto day mt-3'>"; // Agregar la clase mt-3 para el margen superior
+                    echo "<h4 class='mb-3 p-2'>$day</h4>";
+                
+                    echo "<table class='table table-bordered'>";
+                    echo "<tbody>";
+                
+                    for ($hour = 9; $hour <= 21; $hour++) {
+                        $hourFormatted = str_pad($hour, 2, '0', STR_PAD_LEFT) . ":00";
+                        $datetime = $day . ' ' . $hourFormatted; // Combinar el día y la hora en una cadena de fecha/hora
+                
+                        $cellClass = '';
+                
+                        // Obtener solo la hora de la fecha/hora actual
+                        $hourDatetime = date('H', strtotime($datetime));
+                
+                        foreach ($combinacionActos as $combinacion) {
+                            $combinacionDay = $combinacion['dia'];
+                            $combinacionHour = date('H', strtotime($combinacion['hora'])); // Obtener solo la hora sin minutos
+                            $dayOfMonth = date('j', strtotime($day));
+                            if ($combinacionDay === $dayOfMonth && $combinacionHour === $hourDatetime) {
+                                $cellClass = 'red-cell'; 
+                                break; // Puedes detener el bucle una vez que encuentres la coincidencia
+                            }
+                        }
+                        
+                        foreach ($combinacionInscritos as $combinacion) {
+                            $combinacionDay = $combinacion['dia'];
+                            $combinacionHour = date('H', strtotime($combinacion['hora'])); // Obtener solo la hora sin minutos
+                            $dayOfMonth = date('j', strtotime($day));
+                            if ($combinacionDay === $dayOfMonth && $combinacionHour === $hourDatetime) {
+                                $cellClass = 'green-cell'; 
+                                break; // Puedes detener el bucle una vez que encuentres la coincidencia
+                            }
+                        }
+
+                
+                        echo "<tr>";
+                        echo "<td class='$cellClass'>$hourFormatted</td>";
+                        echo "</tr>";
+                    }
+                
+                    echo "</tbody>";
+                    echo "</table>";
+                    echo "</div>";
+                }
+                echo "</div>";
+/**************************************************************************************************************************************** */
             } elseif ($view === 'dia') {
 
                 echo "<div class='container'>";

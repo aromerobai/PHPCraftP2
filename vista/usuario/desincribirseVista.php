@@ -39,19 +39,19 @@
             $Num_asistentes = $acto['Num_asistentes'];
     
             // Verifica si el Id_acto no está en la lista de Id_acto_persona
-            if (!in_array($Id_acto, $actosPersonaIds)) {
+            if (in_array($Id_acto, $actosPersonaIds)) {
                 echo "<div>";
                 echo "<h3>$Titulo</h3>";
                 echo "<p>Fecha: $Fecha | Hora: $Hora</p>";
                 echo "<p>$Descripcion_corta</p>";
                 // Resto del código para mostrar el formulario...
-                echo "<form action='inscribirseVista.php' method='post'>";
+                echo "<form action='desincribirseVista.php' method='post'>";
                 echo "<input type='hidden' name='id_acto' value='$Id_acto'>"; 
                 echo "<input type='hidden' name='id_persona' value='$id'>";
                 echo "<input type='hidden' name='password' value='$password'>";
                 echo "<input type='hidden' name='email' value='$email'>";
                 echo "<input type='hidden' name='username' value='$username'>";
-                echo "<input type='submit' name='inscribirse' value='Inscribirse'>";
+                echo "<input type='submit' name='inscribirse' value='DesInscribirse'>";
                 echo "</form>";
                 echo "</div>";
             }
@@ -68,7 +68,7 @@
             $username = $_POST["username"];
 
             $currentDate = date('Y-m-d');
-            inscribirseEnActo($id_acto,$id_persona,$currentDate);
+            desinscribirPersonaActo($id_acto,$id_persona);
             // Redireccionar con los parámetros GET
             echo "<script>
                 window.location.href = '{$_SERVER['PHP_SELF']}?id=$id_persona&password=$password&email=$email&username=$username';

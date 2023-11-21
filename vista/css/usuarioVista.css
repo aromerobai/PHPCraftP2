@@ -23,3 +23,14 @@
 .event-day-green {
     background-color: green; /* Cambia el color de fondo a verde */
 }
+
+.green-cell {
+    background-color: lightgreen; /* Cambia el color de fondo a verde claro */
+    color: black; /* Cambia el color del texto a negro */
+}
+
+/* Estilos para celdas coincidentes con $diasActos y $horasActos */
+.red-cell {
+    background-color: lightcoral; /* Cambia el color de fondo a coral claro */
+    color: white; /* Cambia el color del texto a blanco */
+}
