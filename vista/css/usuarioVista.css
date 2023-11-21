@@ -14,3 +14,12 @@
 .hour-table td {
     font-size: 12px;
 }
+
+.event-day {
+    background-color: red;
+    color: white;
+}
+
+.event-day-green {
+    background-color: green; /* Cambia el color de fondo a verde */
+}

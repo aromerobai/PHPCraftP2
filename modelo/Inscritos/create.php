@@ -8,3 +8,12 @@ function createInscripcion($Id_inscripcion, $Id_persona, $id_acto, $Fecha_inscri
     connection::ejecutar_consulta($consulta);
     
 }
+
+function createInscripcionUsuario($id_acto, $Id_persona, $Fecha_inscripcion) {
+    
+    $consulta = "INSERT INTO eventos.Inscritos (Id_persona, id_acto, Fecha_inscripcion)
+    VALUES ('$Id_persona', '$id_acto', STR_TO_DATE('$Fecha_inscripcion', '%Y-%m-%d'))";
+
+    connection::ejecutar_consulta($consulta);
+    
+}

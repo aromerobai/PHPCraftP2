@@ -36,7 +36,14 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                 <input type="hidden" name="username" value="<?php echo $username; ?>">
                 <input type="hidden" name="password" value="<?php echo $password; ?>">
                 <input type="hidden" name="email" value="<?php echo $email; ?>">
-                <button type="submit">Perfil de Usuario</button>
+                <button type="submit">Modificar Usuario</button>
+            </form></br>
+            <form action="./inscribirseVista.php" method="get">
+                <input type="hidden" name="id" value="<?php echo $id; ?>">
+                <input type="hidden" name="username" value="<?php echo $username; ?>">
+                <input type="hidden" name="password" value="<?php echo $password; ?>">
+                <input type="hidden" name="email" value="<?php echo $email; ?>">
+                <button type="submit">Inscribirse en Actos</button>
             </form>
             <div class="text-center mt-4">
             <button class="btn btn-primary mr-2" onclick="window.location.href='usuarioVista.php?view=mes&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Mes</button>
@@ -50,29 +57,66 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
         </div>
         
         <?php 
+
+        //Muestro el mes la semana y eldia segun el boton
         if(isset($_GET['view'])) {
             $view = $_GET['view'];
         
             if ($view === 'mes') {
+         
                 echo "<div class='calendar mt-5'>";
                 // Obtener el mes actual y el año
                 $month = date('n');
                 $year = date('Y');
-    
+
+                // Obtener el primer día del mes
+                $firstDayOfMonth = mktime(0, 0, 0, $month, 1, $year);
+
+                // Obtener el número de días en el mes
+                $numberDays = date('t', $firstDayOfMonth);
+
+                // Obtener el día de la semana del primer día del mes
+                $dayOfWeekIndex = date('w', $firstDayOfMonth);
+
+                // Obtener los eventos
+                require_once '../../controlador/inscribirUsuarioControlador.php';
+                
+                $actosPersonas = leerActosDePersona($id);
+                $eventDays = array();
+
+                if ($actosPersonas && is_iterable($actosPersonas)) {
+                    foreach ($actosPersonas as $actoPersona) {
+                        $actoPersonaId = $actoPersona['id_acto'];
+                        //echo "idActo Verde: " . $actoPersonaId. "</br>";
+                        $resultados = obtenerActos();
+                        foreach ($resultados as $acto) {
+                            $actoGeneral = $acto['Id_acto'];
+                            //echo "Acto general: " . $acto['Id_acto']." -- Acto Persona: " . $actoPersonaId ."</br>";
+                            if ($acto['Id_acto'] === $actoPersonaId) {
+                                $Fecha = $acto['Fecha'];
+                                $eventDays[] = date('j', strtotime($Fecha));
+                            }
+                        }
+                    }
+                }
+                
+                // Crear un array para almacenar las fechas de los eventos
+                $diasActos = obtenerActos();
+                $eventDates = array();
+                if ($diasActos && is_iterable($diasActos)) {
+                    foreach ($diasActos as $acto) {
+                        $Fecha = $acto['Fecha'];
+                        $id = $acto['Id_acto'];
+                        $eventDates[] = date('j', strtotime($Fecha)); // Almacena solo el día del evento
+                    }
+                }
+
                 // Nombres de los meses y días de la semana
                 $monthNames = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
                 $dayOfWeek = array('Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom');
-    
-                // Obtener el primer día del mes
-                $firstDayOfMonth = mktime(0, 0, 0, $month, 1, $year);
-    
-                // Obtener el número de días en el mes
-                $numberDays = date('t', $firstDayOfMonth);
-    
-                // Obtener el día de la semana del primer día del mes
-                $dayOfWeekIndex = date('w', $firstDayOfMonth);
-    
+
                 // Crear el encabezado del calendario
+                echo "<div class='calendar mt-5'>";
                 echo "<h2 class='text-center mb-4'>{$monthNames[$month - 1]} $year</h2>";
                 echo "<table class='table table-bordered'>";
                 echo "<tr>";
@@ -80,30 +124,35 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                     echo "<th scope='col'>$day</th>";
                 }
                 echo "</tr>";
-    
+
                 echo "<tr>";
-    
                 // Rellenar los espacios en blanco hasta el primer día del mes
                 for ($i = 0; $i < $dayOfWeekIndex; $i++) {
                     echo "<td></td>";
                 }
-    
+
                 // Mostrar los días del mes
                 for ($day = 1; $day <= $numberDays; $day++, $dayOfWeekIndex++) {
+                    // Verificar si el día actual coincide con un evento y resaltar en verde si es así
+                    $isEventDay = in_array($day, $eventDates);
+                    $isGreenEventDay = in_array($day, $eventDays);
+                    $cellClass = $isEventDay ? ($isGreenEventDay ? 'event-day-green' : 'event-day') : '';
+
                     if ($dayOfWeekIndex % 7 == 0) {
                         echo "</tr><tr>";
                     }
-                    echo "<td>$day</td>";
+
+                    // Agregar la clase CSS para el estilo de los días con eventos
+                    echo "<td class='$cellClass'>$day</td>";
                 }
-    
+
                 // Rellenar los espacios restantes hasta el final de la semana
                 while ($dayOfWeekIndex % 7 != 0) {
                     echo "<td></td>";
                     $dayOfWeekIndex++;
                 }
-    
+
                 echo "</tr></table>";
-                echo "</div>";
                 echo "</div>";
 
             } elseif ($view === 'semana') {
