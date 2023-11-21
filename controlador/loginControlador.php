@@ -12,18 +12,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if ($mensaje) {
             while ($fila = $mensaje->fetch(PDO::FETCH_ASSOC)) {
-                $username = $fila['Username'];
                 $id_usuario = $fila['Id_usuario'];
                 $id_tipo_usuario = $fila['Id_tipo_usuario'];
 
+                $username = $fila['Username'];
+                $Password = $fila['Password'];
+                $Email = $fila['Email'];
+
                 if ($id_tipo_usuario == 1) {
-                    echo "<script>window.location.href='../vista/usuario/usuarioVista.php?var1=" . urlencode($id_usuario) . "';</script>";
+                    echo "<script>window.location.href='../vista/usuario/usuarioVista.php?id_usuario=" . urlencode($id_usuario) 
+                    . "&username=" . urlencode($username) 
+                    . "&password=" . urlencode($Password) 
+                    . "&email=" . urlencode($Email) 
+                    . "';</script>";
                     exit(); 
                 } elseif ($id_tipo_usuario == 2) {
                     echo "<script>window.location.href='../vista/ponente/ponenteVista.php?var1=" . urlencode($id_usuario) . "';</script>";
                     exit(); 
                 } elseif ($id_tipo_usuario == 3) {
-                    echo "Es de tipo administrador";
                     echo "<script>window.location.href='../vista/admin/menuAdministracion.php';</script>";
                     exit();
                 }

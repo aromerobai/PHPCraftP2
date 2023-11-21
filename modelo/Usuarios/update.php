@@ -9,9 +9,9 @@ function updateUsuario($Id_usuario, $Username,$Password,$Id_Persona,$Id_tipo_usu
     connection::ejecutar_consulta($consulta);
 }
 
-function updatePerfilUsuario($Id_usuario, $Username, $Password) {
+function updatePerfilUsuario($Id_usuario, $Username, $Password, $Email) {
 
-    $consulta = "UPDATE eventos.Usuarios SET Username='$Username', Password='$Password'
+    $consulta = "UPDATE eventos.Usuarios SET Username='$Username', Password='$Password' , Email='$Email'
     WHERE Id_usuario='$Id_usuario'";
 
     connection::ejecutar_consulta($consulta);

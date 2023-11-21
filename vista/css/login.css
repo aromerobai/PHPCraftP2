@@ -17,7 +17,13 @@ body {
 .btn-primary {
     max-width: 130px;
     margin-top: 40px;
-    display: block;
+    background-color: #f1904e !important; 
+    color: #ffffff;     
+}
+
+.btn-secondary {
+    max-width: 130px;
+    margin-top: 40px;
     background-color: #f1904e !important; 
     color: #ffffff;     
 }
