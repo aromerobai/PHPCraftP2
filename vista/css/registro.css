@@ -8,6 +8,7 @@ body {
     align-items: center;
 }
 .card {
+    min-width: 500px;
     padding: 20px;
     background-color: rgb(255, 255, 255);
 }
