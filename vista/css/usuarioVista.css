@@ -1,0 +1,16 @@
+.calendar {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.week {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.day {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+.hour-table td {
+    font-size: 12px;
+}

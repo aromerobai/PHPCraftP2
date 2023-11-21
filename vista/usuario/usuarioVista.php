@@ -20,25 +20,8 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
 <head>
     <title>Calendario con Bootstrap</title>
     <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/usuarioVista.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .calendar {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .week {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .day {
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
-            font-size: 12px;
-        }
-        .hour-table td {
-            font-size: 12px;
-        }
-    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
@@ -63,9 +46,9 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
             <div>
         </div>
         <div class="view">
-            <!-- Contenido de las tablas (semana y día) se mostrará aquí según se haga clic en los botones -->
+            <!-- Contenido de las tablas (mes, semana y día) se mostrará aquí según se haga clic en los botones -->
         </div>
-
+        
         <?php 
         if(isset($_GET['view'])) {
             $view = $_GET['view'];
@@ -78,7 +61,7 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
     
                 // Nombres de los meses y días de la semana
                 $monthNames = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-                $dayOfWeek = array('Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb');
+                $dayOfWeek = array('Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom');
     
                 // Obtener el primer día del mes
                 $firstDayOfMonth = mktime(0, 0, 0, $month, 1, $year);
@@ -147,7 +130,7 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                 echo "</div>";
 
             } elseif ($view === 'dia') {
-                
+
                 echo "<div class='container'>";
                 echo "<h2>Horario para el día actual</h2>";
                 echo "<table class='table table-bordered'>";
