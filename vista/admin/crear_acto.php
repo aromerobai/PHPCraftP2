@@ -60,7 +60,7 @@
                                 <input type="number" name="num_asistentes" class="form-control" required>
                             </div>
                             <button type="submit" name="crearActo" class="btn btn-primary btn-block">Crear Evento</button>
-                                                    
+                            <a href="./menuAdministracion.php" class="btn btn-primary button-atras">Atrás</a>                    
                             <?php
                                 include("../../controlador/crActoControlador.php");
 

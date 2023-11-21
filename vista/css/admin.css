@@ -8,6 +8,7 @@ body {
 .principal {
     display:flexbox;
     min-height: 65vh;
+    min-width: 700px;
     margin-top: 150px;
     margin-bottom: 150px;
     padding-top: 50px;
