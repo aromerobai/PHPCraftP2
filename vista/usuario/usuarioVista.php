@@ -65,7 +65,7 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
         
         <?php 
 
-        //Muestro el mes la semana y eldia segun el boton
+        //Muestro el mes la semana y el dia segun el boton
         if(isset($_GET['view'])) {
 
             // Obtener los eventos
@@ -114,6 +114,19 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                         $diasActos[] = date('j', strtotime($Fecha));
                         $horasActos[] = date('H:i', strtotime($Hora)); 
                     }
+                }
+            }
+
+            foreach($horasActosInscritos as $index => $hora) {
+                if(isset($diasActosInscritos[$index])) {
+                    $combinacionInscritos[] = array('hora' => $hora, 'dia' => $diasActosInscritos[$index]);
+                }
+            }
+            
+            // Combinar horasActos con diasActos
+            foreach($horasActos as $index => $hora) {
+                if(isset($diasActos[$index])) {
+                    $combinacionActos[] = array('hora' => $hora, 'dia' => $diasActos[$index]);
                 }
             }
 
@@ -181,19 +194,6 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
 /**************************************************************************************************************************************** */
             } elseif ($view === 'semana') {
 
-                foreach($horasActosInscritos as $index => $hora) {
-                    if(isset($diasActosInscritos[$index])) {
-                        $combinacionInscritos[] = array('hora' => $hora, 'dia' => $diasActosInscritos[$index]);
-                    }
-                }
-                
-                // Combinar horasActos con diasActos
-                foreach($horasActos as $index => $hora) {
-                    if(isset($diasActos[$index])) {
-                        $combinacionActos[] = array('hora' => $hora, 'dia' => $diasActos[$index]);
-                    }
-                }
-
                 echo "<div class='week row no-gutters'>";
                 $currentDate = date('Y-m-d'); // Obtener la fecha actual
                 
@@ -249,7 +249,7 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
 /**************************************************************************************************************************************** */
             } elseif ($view === 'dia') {
 
-                echo "<div class='container'>";
+                echo "<div class='container mt-4'>";
                 echo "<h2>Horario para el día actual</h2>";
                 echo "<table class='table table-bordered'>";
                 echo "<thead>";
@@ -259,15 +259,44 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                 echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
-        
+
                 date_default_timezone_set('Europe/Madrid'); // Establecer la zona horaria de Madrid
                 $currentDate = date('Y-m-d'); // Obtener la fecha actual
-                
+
                 for ($hour = 9; $hour <= 21; $hour++) {
                     $currentDateTime = $currentDate . " " . str_pad($hour, 2, "0", STR_PAD_LEFT) . ":00:00";
                     
+                    $isInscrito = false;
+                    $isActo = false;
+                    
+                    $currentDay = date('Y-m-d', strtotime($currentDateTime)); // Extraer solo el día
+    
+                    // Verificar si la hora coincide con $combinacionInscritos[]
+                    foreach ($combinacionInscritos as $inscrito) {
+                        if ($inscrito['dia'] === $currentDay && $inscrito['hora'] === date('H:00', strtotime($currentDateTime))) {
+                            $isInscrito = true;
+                            break;
+                        }
+                    }
+                    
+                    // Verificar si la hora coincide con $combinacionActos[]
+                    foreach ($combinacionActos as $acto) {
+                        $actoDay = date('Y-m-d', strtotime($acto['dia'])); // Extraer solo el día del acto
+                        if ($actoDay === $currentDay && $acto['hora'] === date('H:00', strtotime($currentDateTime))) {
+                            $isActo = true;
+                            break;
+                        }
+                    }
+                    
+                    // Imprimir la hora con el estilo correspondiente
                     echo "<tr>";
-                    echo "<td>" . date('H:00', strtotime($currentDateTime)) . "</td>";
+                    if ($isInscrito) {
+                        echo "<td style='color: green; font-weight: bold;'>" . date('H:00', strtotime($currentDateTime)) . "</td>";
+                    } elseif ($isActo) {
+                        echo "<td style='color: red; font-weight: bold;'>" . date('H:00', strtotime($currentDateTime)) . "</td>";
+                    } else {
+                        echo "<td>" . date('H:00', strtotime($currentDateTime)) . "</td>";
+                    }
                     echo "<td>Actividad a las " . date('H:00', strtotime($currentDateTime)) . "</td>";
                     echo "</tr>";
                 }
@@ -275,6 +304,7 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                 echo"</tbody>";
                 echo"</table>";
                 echo "</div>";
+
             }
         }
         ?>
