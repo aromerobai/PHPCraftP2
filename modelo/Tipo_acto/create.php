@@ -1,9 +1,12 @@
 <?php
 
-function createTipoActo($Id_tipo_acto, $Descripcion) {
-    
-    $consulta = "INSERT INTO eventos.Tipo_acto (Id_tipo_acto, Descripcion) VALUES ('$Id_tipo_acto', '$Descripcion')";
+function createTipoActo($Descripcion) {
+    try {
+        $consulta = "INSERT INTO eventos.Tipo_acto (Descripcion) 
+        VALUES ('$Descripcion')";
 
-    connection::ejecutar_consulta($consulta);
-    
+        $resultado = connection::ejecutar_consulta($consulta);
+    }catch (PDOException $e) {
+        return 'Error agregando el tipo de acto!';
+    } 
 }

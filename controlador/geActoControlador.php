@@ -7,6 +7,11 @@ include('../../modelo/Actos/update.php');
 include('../../modelo/Lista_Ponentes/read.php');
 include('../../modelo/Lista_Ponentes/create.php');
 include('../../modelo/Lista_Ponentes/update.php');
+include('../../modelo/Lista_Ponentes/delete.php');
+include('../../modelo/Tipo_acto/read.php');
+include('../../modelo/Tipo_acto/create.php');
+include('../../modelo/Tipo_acto/update.php');
+include('../../modelo/Tipo_acto/delete.php');
 include('../../modelo/Usuarios/read.php');
 
 function editarActo(){
@@ -20,7 +25,7 @@ function confiPonente(){
 }
 
 function editarTipoEvento(){
-    echo '<meta http-equiv="refresh" content="0;url=">';
+    echo '<meta http-equiv="refresh" content="0;url=tipo_evento.php">';
     exit();
 }
 
@@ -29,6 +34,7 @@ function adminInscritos(){
     exit();
 }
 
+/***********************************************************************************************************/
 /* FUNCIONES PARA EDITAR EVENTO */
 function listarActos() {
 
@@ -111,6 +117,7 @@ function listarActos() {
     }
 }
 
+/***********************************************************************************************************/
 /* FUNCIONES PARA GESTION PONENTES */
 function listarPonentes() {
     $resultados = readPonentes();
@@ -155,9 +162,16 @@ function listarPonentes() {
                 $Id_acto = $_POST['id_acto'];
                 $Id_persona = $_POST['id_persona'];
                 $Orden = $_POST['orden'];
-                
      
                 updatePonente($Id_ponente, $Id_persona, $Id_acto,  $Orden);
+                echo '<meta http-equiv="refresh" content="0;url=./ponente.php">';
+
+            }
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_ponente'])) {
+                // Obtén los valores del formulario
+                $Id_ponente = $_POST['id_ponente'];
+                
+                deletePonente($Id_ponente);
                 echo '<meta http-equiv="refresh" content="0;url=./ponente.php">';
             }
         }
@@ -208,4 +222,64 @@ function listarActo() {
     }else{
         echo "No existen actos";
     }
+}
+
+/***********************************************************************************************************/
+/* FUNCIONES PARA GESTION TI_ACTOS */
+function listarTipoActos() {
+    $resultados = readTipoActos();
+
+    if($resultados){
+        foreach($resultados as $tipoActo){
+            $Id_tipo_acto = $tipoActo['Id_tipo_acto'];
+            $Descripcion = $tipoActo['Descripcion'];
+            echo '<div class="tipoActo">';
+            echo '  <span>ID: ' . $tipoActo['Id_tipo_acto'] . ', nombre: ' . $tipoActo['Descripcion'] . '</span>';
+            echo '  <button class="btn btn-editar-acto " data-id="' . $tipoActo['Id_tipo_acto'] . '">Editar</button>';  
+            echo '  <form method="POST" class="formulario-editar-tipoActo border p-3" style="display:none;">';
+            echo '  <input type="hidden" name="Id_tipo_acto" value="' . $Id_tipo_acto . '">';
+            echo '      <div class="form-group">';
+            echo '          <label for="Descripcion">Descripcion del tipo de Acto</label>';
+            echo '          <input type="text" name="Descripcion" id="Descripcion" class="form-control" required value="' . $Descripcion . '">';
+            echo '      </div>';
+            echo '      <div class="button-container">';
+            echo '      <button type="submit" name="guardar_cambios" class="btn btn-primary">Aplicar</button>';
+            echo '      <button type="submit" name="eliminar_tipoActo" class="btn btn-danger eliminar">Eliminar</button>';
+            echo '      </div>';
+            echo '  </form>';
+            echo '</div>';
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['guardar_cambios'])) {
+                // Obtén los valores del formulario
+                $Id_tipo_acto = $_POST['Id_tipo_acto'];
+                $Descripcion = $_POST['Descripcion'];
+             
+                updateTipoActo($Id_tipo_acto, $Descripcion);
+                echo '<meta http-equiv="refresh" content="0;url=./tipo_evento.php">';
+
+            }
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_tipoActo'])) {
+                // Obtén los valores del formulario
+                $Id_tipo_acto = $_POST['Id_tipo_acto'];
+                
+                deleteTipoActo($Id_tipo_acto);
+                echo '<meta http-equiv="refresh" content="0;url=./tipo_evento.php">';
+            }
+        }
+    }else{
+        echo "<p>No hay tipos de Actos en la lista.</p>";
+    }
+}
+
+function añadirTipoActo() {
+    if (isset($_POST["añadirTipoActo"])) {
+        $Descripcion = $_POST["Descripcion"];
+        
+        $resultado_creacion = createTipoActo($Descripcion);
+
+        if ($resultado_creacion == 'Error agregando el tipo de acto!'){
+            return 'Error agregando el tipo de acto!';
+        }    
+    } 
 }

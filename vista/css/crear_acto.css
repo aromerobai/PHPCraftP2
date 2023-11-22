@@ -57,6 +57,7 @@ body {
     
 }
 
+.formulario-editar-tipoActo.border,
 form.formulario-editar-acto.border {
     margin-top: 25px;
 }
@@ -82,6 +83,7 @@ form.formulario-editar-acto.border {
     float: right;
 }
 
+
 #formularioCrearPonente {
     margin-top: 25px;
     margin-bottom: 25px;
@@ -105,5 +107,20 @@ form.formulario-editar-ponente.border {
 
 .btn-danger{
     margin-top: 35px;
+}
+
+/* css TIPOACTO */
+
+.tipoActo {
+    display: block;
+    align-items: center;
+    justify-content: space-between; 
+    margin-top: 25px;
+}
+
+#formularioCrearTipoActo {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding-bottom: 65px !important;
 }
 
