@@ -96,6 +96,6 @@ if(isset($_GET['id_persona_inscribir'])){
         }
     }
     ?>
-
+    <a href="./inscritos.php" class="btn btn-primary button-atras">Atrás</a>
 </body>
 </html>
