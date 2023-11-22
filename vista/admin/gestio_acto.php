@@ -26,7 +26,7 @@
                     confiPonente();
                 } else {
                     echo '<a href="?action=editarActo" class="btn btn-primary button-editar-evento">EDITAR EVENTO</a>';
-                    echo '<a href="?action=confiPonente" class="btn btn-primary button-ponente">PONENTES</a>';
+                    echo '<a href="?action=confiPonente" class="btn btn-primary button-ponente">GESTIÓN PONENTES</a>';
                 }
                 ?>
             </div>
@@ -37,8 +37,8 @@
                 } elseif (isset($_GET['action']) && $_GET['action'] == 'adminInscritos') {
                     adminInscritos();
                 } else {
-                    echo '<a href="?action=editarTipoEvento" class="btn btn-primary button-crear-tipoActo">EDITAR TIPO EVENTO</a>';
-                    echo '<a href="?action=adminInscritos" class="btn button-configurar-inscritos">ADMINISTRAR INSCRITOS</a>';
+                    echo '<a href="?action=editarTipoEvento" class="btn btn-primary button-crear-tipoActo">GESTIÓN TIPOS EVENTO</a>';
+                    echo '<a href="?action=adminInscritos" class="btn button-configurar-inscritos">GESTIÓN INSCRITOS</a>';
                 }
                 ?>
             </div>

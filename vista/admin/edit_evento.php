@@ -30,7 +30,8 @@
             </div>
         </div>
     </div>
-    <script> // Obtener todos los botones "Editar" por su clase
+
+    <script> 
     const botonEditar = document.querySelectorAll('.btn-editar-acto');
 
     botonEditar.forEach(boton => {
@@ -46,5 +47,6 @@
         });
     });
     </script> 
+    
 </body>
 </html>

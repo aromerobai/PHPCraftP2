@@ -7,6 +7,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 .card {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -43,8 +44,35 @@ body {
     margin-top: 25px;
 }
 
+.btn-editar-ponente,
 .btn-editar-acto {
     max-width: 100px;
+    max-height: 30px;
+    margin-left: 20px;
+    display: inline-flex;
+    align-items: center;
+    background-color: #f1904e !important;
+    color: #ffffff;
+    float: right;
+    
+}
+
+form.formulario-editar-acto.border {
+    margin-top: 25px;
+}
+
+/* css PONENTE */
+#btnMostrarFormulario{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    background-color: #f1904e !important;
+    color: #ffffff;
+    
+    
+}
+.btn-agregar {
+    max-width: 150px;
     max-height: 30px;
     margin-left: 80px;
     display: inline-flex;
@@ -54,10 +82,28 @@ body {
     float: right;
 }
 
-form.formulario-editar-acto.border {
+#formularioCrearPonente {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.ponente {
+    display: block;
+    align-items: center;
+    justify-content: space-between; 
     margin-top: 25px;
 }
 
+form.formulario-editar-ponente.border {
+    margin-top: 25px;
+}
 
+.button-container {
+    display: grid;
+    justify-content: space-between;
+}
 
+.btn-danger{
+    margin-top: 35px;
+}
 
