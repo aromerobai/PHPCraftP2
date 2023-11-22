@@ -1,9 +1,14 @@
 <?php
 
-function createPonente($id_ponente, $Id_persona, $Id_acto, $Orden) {
+function createPonente($Id_persona, $Id_acto, $Orden) {
     
-    $consulta = "INSERT INTO eventos.Lista_Ponentes (id_ponente, Id_persona, Id_acto, Orden) VALUES ('$id_ponente', '$Id_persona', '$Id_acto', '$Orden')";
+    try {
+        $consulta = "INSERT INTO eventos.Lista_Ponentes (Id_persona, Id_acto, Orden) 
+        VALUES ('$Id_persona', '$Id_acto', '$Orden')";
+        var_dump($Id_persona, $Id_acto, $Orden);
 
-    connection::ejecutar_consulta($consulta);
-    
+        $resultado = connection::ejecutar_consulta($consulta);
+    }catch(PDOException $e) {
+        return 'Error al añadir ponente!';
+    }
 }

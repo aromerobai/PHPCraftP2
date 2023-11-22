@@ -7,6 +7,13 @@ function readUsuario($Id_usuario) {
     return $mensaje;
 }
 
+function readUsuarios() {
+ 
+    $mensaje = connection::ejecutar_consulta("SELECT * FROM eventos.Usuarios");
+
+    return $mensaje;
+}
+
 function existeUsuario($usuario, $contrasena) {
  
     try {
