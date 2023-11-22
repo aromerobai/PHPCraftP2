@@ -56,7 +56,6 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
             <button class="btn btn-primary mr-2" onclick="window.location.href='usuarioVista.php?view=mes&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Mes</button>
             <button class="btn btn-primary mr-2" onclick="window.location.href='usuarioVista.php?view=semana&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Semana</button>
             <button class="btn btn-primary" onclick="window.location.href='usuarioVista.php?view=dia&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Día</button>   
-
             <div>
         </div>
         <div class="view">
@@ -214,24 +213,28 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                 
                         // Obtener solo la hora de la fecha/hora actual
                         $hourDatetime = date('H', strtotime($datetime));
-                
-                        foreach ($combinacionActos as $combinacion) {
-                            $combinacionDay = $combinacion['dia'];
-                            $combinacionHour = date('H', strtotime($combinacion['hora'])); // Obtener solo la hora sin minutos
-                            $dayOfMonth = date('j', strtotime($day));
-                            if ($combinacionDay === $dayOfMonth && $combinacionHour === $hourDatetime) {
-                                $cellClass = 'red-cell'; 
-                                break; // Puedes detener el bucle una vez que encuentres la coincidencia
+                        
+                        if(isset($combinacionActos) && !empty($combinacionActos)){
+                            foreach ($combinacionActos as $combinacion) {
+                                $combinacionDay = $combinacion['dia'];
+                                $combinacionHour = date('H', strtotime($combinacion['hora'])); // Obtener solo la hora sin minutos
+                                $dayOfMonth = date('j', strtotime($day));
+                                if ($combinacionDay === $dayOfMonth && $combinacionHour === $hourDatetime) {
+                                    $cellClass = 'red-cell'; 
+                                    break; // Puedes detener el bucle una vez que encuentres la coincidencia
+                                }
                             }
                         }
-                        
-                        foreach ($combinacionInscritos as $combinacion) {
-                            $combinacionDay = $combinacion['dia'];
-                            $combinacionHour = date('H', strtotime($combinacion['hora'])); // Obtener solo la hora sin minutos
-                            $dayOfMonth = date('j', strtotime($day));
-                            if ($combinacionDay === $dayOfMonth && $combinacionHour === $hourDatetime) {
-                                $cellClass = 'green-cell'; 
-                                break; // Puedes detener el bucle una vez que encuentres la coincidencia
+
+                        if(isset($combinacionInscritos) && !empty($combinacionInscritos)){
+                            foreach ($combinacionInscritos as $combinacion) {
+                                $combinacionDay = $combinacion['dia'];
+                                $combinacionHour = date('H', strtotime($combinacion['hora'])); // Obtener solo la hora sin minutos
+                                $dayOfMonth = date('j', strtotime($day));
+                                if ($combinacionDay === $dayOfMonth && $combinacionHour === $hourDatetime) {
+                                    $cellClass = 'green-cell'; 
+                                    break; // Puedes detener el bucle una vez que encuentres la coincidencia
+                                }
                             }
                         }
 
@@ -265,39 +268,67 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
 
                 for ($hour = 9; $hour <= 21; $hour++) {
                     $currentDateTime = $currentDate . " " . str_pad($hour, 2, "0", STR_PAD_LEFT) . ":00:00";
-                    
+    
                     $isInscrito = false;
                     $isActo = false;
                     
-                    $currentDay = date('Y-m-d', strtotime($currentDateTime)); // Extraer solo el día
-    
-                    // Verificar si la hora coincide con $combinacionInscritos[]
-                    foreach ($combinacionInscritos as $inscrito) {
-                        if ($inscrito['dia'] === $currentDay && $inscrito['hora'] === date('H:00', strtotime($currentDateTime))) {
-                            $isInscrito = true;
-                            break;
-                        }
-                    }
+                    $currentDay = date('Y-m-d', strtotime($currentDateTime)); // Obtener la fecha actual
+                    
+                    $diaMostrar = "";
+                    $horaMostrar = "";
                     
                     // Verificar si la hora coincide con $combinacionActos[]
-                    foreach ($combinacionActos as $acto) {
-                        $actoDay = date('Y-m-d', strtotime($acto['dia'])); // Extraer solo el día del acto
-                        if ($actoDay === $currentDay && $acto['hora'] === date('H:00', strtotime($currentDateTime))) {
-                            $isActo = true;
-                            break;
+                    if(isset($combinacionActos) && !empty($combinacionActos)){
+                        foreach ($combinacionActos as $acto) {
+                            $actoHora = date('H', strtotime($acto['hora'])); // Obtener solo la hora en formato de 24 horas
+                            $currentHora = date('H', strtotime($currentDateTime));
+                            if ($acto['dia'] === date('d', strtotime($currentDateTime)) && $actoHora === $currentHora) {
+                                $isActo = true;
+                                $horaMostrar = $acto['hora'];
+                                break;
+                            }
                         }
                     }
-                    
+
+                    // Verificar si la hora coincide con $combinacionInscritos[]
+                    if(isset($combinacionInscritos) && !empty($combinacionInscritos)){
+                        foreach ($combinacionInscritos as $inscrito) {
+                            $inscritoHora = date('H', strtotime($inscrito['hora'])); // Obtener solo la hora en formato de 24 horas
+                            $currentHora = date('H', strtotime($currentDateTime));
+                            if ($inscrito['dia'] === date('d', strtotime($currentDateTime)) && $inscritoHora === $currentHora) {
+                                $isInscrito = true;
+                                $horaMostrar = $inscrito['hora'];
+                                break;
+                            }
+                        }
+                    }
+                    $tituloDia = "";
+                    //Recupero el titulo del evento por el dia y la hora
+                    if($isInscrito){
+                        $titulos = obtenerTitulo($currentDate,$horaMostrar);
+                        foreach($titulos as $titulo){
+                            $tituloDia = $titulo['Titulo'];
+                        }
+                    }
+                    elseif ($isActo) {
+                        $titulos = obtenerTituloPorDia($currentDate,$horaMostrar);
+                        foreach($titulos as $titulo){
+                            $tituloDia = $titulo['Titulo'];
+                        }
+                    }
+
                     // Imprimir la hora con el estilo correspondiente
                     echo "<tr>";
                     if ($isInscrito) {
-                        echo "<td style='color: green; font-weight: bold;'>" . date('H:00', strtotime($currentDateTime)) . "</td>";
+                        echo "<td style='background-color: lightgreen;; font-weight: bold;'>" . date('H:00', strtotime($currentDateTime)) . "</td>";
+                        echo "<td>". $tituloDia ."</td>";
                     } elseif ($isActo) {
-                        echo "<td style='color: red; font-weight: bold;'>" . date('H:00', strtotime($currentDateTime)) . "</td>";
+                        echo "<td style='background-color: lightcoral; font-weight: bold;'>" . date('H:00', strtotime($currentDateTime)) . "</td>";
+                        echo "<td>". $tituloDia ."</td>";
                     } else {
                         echo "<td>" . date('H:00', strtotime($currentDateTime)) . "</td>";
+                        echo "<td> ---- </td>";
                     }
-                    echo "<td>Actividad a las " . date('H:00', strtotime($currentDateTime)) . "</td>";
                     echo "</tr>";
                 }
 
