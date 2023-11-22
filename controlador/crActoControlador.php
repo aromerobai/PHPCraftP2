@@ -2,6 +2,7 @@
 <?php
 
 include('../../modelo/actos/create.php');
+include('../../modelo/Tipo_acto/read.php');
 include('../../modelo/connection.php');
 
 function añadirEvento() {
@@ -25,6 +26,20 @@ function añadirEvento() {
         }
         
     } 
+}
+
+function obtenerTiposDeActos() {
+    
+    $resultado = readTipoActos();
+    if ($resultado) {
+        foreach ($resultado as $tipoActo) {
+            $Id_tipo_acto = $tipoActo['Id_tipo_acto'];
+            $Descripcion = $tipoActo['Descripcion'];
+            echo '<option value="' . $Id_tipo_acto . '">' . $Descripcion . '</option>'; 
+        }
+    } else {
+        echo "No hay tipos de actos disponibles.";
+    }
 }
 
 ?>

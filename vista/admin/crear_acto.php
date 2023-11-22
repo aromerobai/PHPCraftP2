@@ -45,14 +45,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="id_tipo_acto">Tipo de Acto</label>
-                                <select name="id_tipo_acto" class="form-control" required>
-                                        <option value="1">Conferencia</option>
-                                        <option value="2">Evento cinematográfico</option>
-                                        <option value="3">Evento cultural</option>
-                                        <option value="4">Evento deportivo</option>
-                                        <option value="5">Evento gastronómico</option>
-                                        <option value="6">Evento musical</option>
-                                        <option value="7">Seminario</option>       
+                                <select name="id_tipo_acto" class="form-control" required> 
+                                    <?php
+                                    include("../../controlador/crActoControlador.php");
+                                    obtenerTiposDeActos();    
+                                    ?> 
                                 </select>
                             </div>
                             <div class="form-group">
@@ -60,10 +57,8 @@
                                 <input type="number" name="num_asistentes" class="form-control" required>
                             </div>
                             <button type="submit" name="crearActo" class="btn btn-primary btn-block">Crear Evento</button>
-                            <a href="./menuAdministracion.php" class="btn btn-primary button-atras">Atrás</a>                    
+                                                
                             <?php
-                                include("../../controlador/crActoControlador.php");
-
                                 if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                     $mensaje = añadirEvento();
                                 
@@ -75,9 +70,10 @@
                                         exit();
                                     }
                                 }
-                                ?>
+                            ?>
 
                         </form>
+                        <a href="./menuAdministracion.php" class="btn btn-primary button-atras">Atrás</a>
                     </div>
                 </div>
             </div>
