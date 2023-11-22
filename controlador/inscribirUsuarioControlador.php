@@ -26,3 +26,9 @@ function leerActosDePersona($id_persona) {
 function desinscribirPersonaActo($id_acto,$id_persona){
     deleteInscripcionUsuario($id_acto,$id_persona);
 }
+
+function obtenerTituloPorDia($currentDate,$horaMostrar) {
+    $resultados = obtenerTitulo($currentDate,$horaMostrar);
+    return $resultados;
+}
+

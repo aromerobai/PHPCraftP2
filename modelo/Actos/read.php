@@ -14,3 +14,10 @@ function readActos() {
 
     return $mensaje;
 }
+
+function obtenerTitulo($currentDate,$horaMostrar) {
+ 
+    $mensaje = connection::ejecutar_consulta("SELECT Titulo FROM eventos.Actos WHERE Fecha='$currentDate' AND Hora= '$horaMostrar'");
+
+    return $mensaje;
+}

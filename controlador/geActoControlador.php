@@ -30,7 +30,7 @@ function editarTipoEvento(){
 }
 
 function adminInscritos(){
-    echo '<meta http-equiv="refresh" content="0;url=">';
+    echo '<meta http-equiv="refresh" content="0;url=inscritos.php">';
     exit();
 }
 
