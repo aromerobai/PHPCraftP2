@@ -26,3 +26,17 @@ body {
     background-color: #f1904e !important; 
     color: #ffffff;     
 }
+
+.inscripcion {
+    margin-top: 35px;
+    margin-bottom: 10px;
+}
+
+.btn-primary.btn-inscripcion {
+    max-width: 130px;
+    margin-top: 15px;
+    margin-bottom: 0;
+    display: block; 
+    background-color: #f1904e !important;
+    color: #ffffff;
+}

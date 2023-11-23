@@ -15,7 +15,9 @@
 
 <body>
     <div class="container text-center principal" >
-        <h1>Panel de Administración</h1>
+        <h1>Panel de Administración
+        <a href="../../index.php" class="btn btn-primary button-cerrar">Cerrar sesión</a>
+        </h1>
         <div class="buttons-container m-100" >
         
         <?php

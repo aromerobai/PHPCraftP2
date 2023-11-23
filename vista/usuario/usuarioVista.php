@@ -16,10 +16,10 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <title>Calendario con Bootstrap</title>
-    <link rel="stylesheet" href="../css/login.css">
+    
     <link rel="stylesheet" href="../css/usuarioVista.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -29,33 +29,35 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
 <body>
     <div class="container">
         <div class="jumbotron mt-3 text-center">
-            <h1 class="display-4">Calendario de <?php echo $username; ?></h1>
+            <h1 class="display-4">CALENDARIO DE <?php echo $username; ?>
+            <a href="../../index.php" class="btn btn-primary button-cerrar">Cerrar sesión</a>
+        </h1>
             <p class="lead">Correo electrónico: <?php echo $email; ?></p>
             <form action="./perfilUsuarioVista.php" method="get">
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                 <input type="hidden" name="username" value="<?php echo $username; ?>">
                 <input type="hidden" name="password" value="<?php echo $password; ?>">
                 <input type="hidden" name="email" value="<?php echo $email; ?>">
-                <button type="submit">Modificar Usuario</button>
+                <button class="btn btn-primary usuario" type="submit">Mi perfil</button>
             </form></br>
             <form action="./inscribirseVista.php" method="get">
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                 <input type="hidden" name="username" value="<?php echo $username; ?>">
                 <input type="hidden" name="password" value="<?php echo $password; ?>">
                 <input type="hidden" name="email" value="<?php echo $email; ?>">
-                <button type="submit">Inscribirse en Actos</button>
+                <button class="btn btn-primary usuario"  type="submit">Inscripciones</button>
             </form></br>
             <form action="./desincribirseVista.php" method="get">
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                 <input type="hidden" name="username" value="<?php echo $username; ?>">
                 <input type="hidden" name="password" value="<?php echo $password; ?>">
                 <input type="hidden" name="email" value="<?php echo $email; ?>">
-                <button type="submit">Desinscribirse en Actos</button>
+                <button class="btn btn-primary usuario"  type="submit">Desinscripciones</button>
             </form>
-            <div class="text-center mt-3">
-            <button class="btn btn-primary mr-2" onclick="window.location.href='usuarioVista.php?view=mes&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Mes</button>
-            <button class="btn btn-primary mr-2" onclick="window.location.href='usuarioVista.php?view=semana&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Semana</button>
-            <button class="btn btn-primary" onclick="window.location.href='usuarioVista.php?view=dia&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Día</button>   
+            <div class="text-center mt-3 botones-calendario">
+            <button class="btn btn-primary mr-2 calendario" onclick="window.location.href='usuarioVista.php?view=mes&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Mes</button>
+            <button class="btn btn-primary mr-2 calendario" onclick="window.location.href='usuarioVista.php?view=semana&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Semana</button>
+            <button class="btn btn-primary calendario" onclick="window.location.href='usuarioVista.php?view=dia&id_usuario=<?php echo $id; ?>&username=<?php echo $username; ?>&password=<?php echo $password; ?>&email=<?php echo $email; ?>'">Día</button>   
             <div>
         </div>
         <div class="view">
@@ -192,8 +194,10 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                 echo "</div>";
 /**************************************************************************************************************************************** */
             } elseif ($view === 'semana') {
-
+                echo "<div class='container mt-5 semana'>";
+                echo "<h2 class='mb-5'>Horario para la semana actual</h2>";
                 echo "<div class='week row no-gutters'>";
+               
                 $currentDate = date('Y-m-d'); // Obtener la fecha actual
                 
                 for ($i = 0; $i <= 6; $i++) {
@@ -205,7 +209,7 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                     echo "<table class='table table-bordered'>";
                     echo "<tbody>";
                 
-                    for ($hour = 9; $hour <= 21; $hour++) {
+                    for ($hour = 8; $hour <= 24; $hour++) {
                         $hourFormatted = str_pad($hour, 2, '0', STR_PAD_LEFT) . ":00";
                         $datetime = $day . ' ' . $hourFormatted; // Combinar el día y la hora en una cadena de fecha/hora
                 
@@ -252,8 +256,8 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
 /**************************************************************************************************************************************** */
             } elseif ($view === 'dia') {
 
-                echo "<div class='container mt-4'>";
-                echo "<h2>Horario para el día actual</h2>";
+                echo "<div class='container mt-5 dia'>";
+                echo "<h2 class='mb-5'>Horario para el día actual</h2>";
                 echo "<table class='table table-bordered'>";
                 echo "<thead>";
                 echo "<tr>";
@@ -266,7 +270,7 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
                 date_default_timezone_set('Europe/Madrid'); // Establecer la zona horaria de Madrid
                 $currentDate = date('Y-m-d'); // Obtener la fecha actual
 
-                for ($hour = 9; $hour <= 21; $hour++) {
+                for ($hour = 8; $hour <= 24; $hour++) {
                     $currentDateTime = $currentDate . " " . str_pad($hour, 2, "0", STR_PAD_LEFT) . ":00:00";
     
                     $isInscrito = false;
