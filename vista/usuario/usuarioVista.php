@@ -151,7 +151,7 @@ if (isset($_GET['id_usuario']) && isset($_GET['username']) && isset($_GET['passw
 
                 // Nombres de los meses y días de la semana
                 $monthNames = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-                $dayOfWeek = array('Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom');
+                $dayOfWeek = array('Dom','Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb');
 
                 // Crear el encabezado del calendario
                 echo "<div class='calendar mt-5'>";
